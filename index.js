@@ -1,10 +1,13 @@
+require('dotenv').config(); // Variables' envioren config
+
 const { leerInput,
     inquirerMenu,
     pause } = require('./helpers/inquirer');
-const Busquedas = require('./models/busquedas');
 
+const Busquedas = require('./models/busquedas');
 require('colors');
 
+//console.log(process.env.MAPBOX_KEY);
 
 const main = async () => {
     
