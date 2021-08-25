@@ -34,9 +34,26 @@ class Busquedas{
         }catch(error){
             return [];
         }
-
     }
 
+    async climaLugar( lat, lon){
+        try{
+            // instance axios.create()
+
+            // resp.data
+
+            return{
+                desc: '',
+                min: '',
+                max: '',
+                temp: '',
+            }
+        }catch(error){
+            console.log(error);
+        }
+
+    }
+    
 }
 
 module.exports = Busquedas;
