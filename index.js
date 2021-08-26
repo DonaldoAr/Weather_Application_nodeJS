@@ -18,8 +18,6 @@ const main = async () => {
     do {
         opt = await inquirerMenu();
         switch ( opt ) {
-            
-            
             case 1:
                 
                 // Mostrar mensaje
@@ -33,18 +31,19 @@ const main = async () => {
                 const id = await listarLugares(lugares);
                 const lugarSelec= lugares.find(l => l.id === id );
                 // Mostrar los datos del clima
-                const clima = await busquedas.climaLugar()
+                const clima = await busquedas.climaLugar(lugarSelec.lat, lugarSelec.lng);
+                //console.log(clima);
                 // Mostrar resultados
 
                 console.log('Informacion de la ciudad\n'.green);
                 console.log('Ciudad: ', lugarSelec.nombre);
                 console.log('Latitud: ', lugarSelec.lat);
                 console.log('Longitud: ', lugarSelec.lng);
-                console.log('Temperatura: ',);
-                console.log('Min: ',);
-                console.log('Max: ',);
-                console.log('Como está el clima: ',)
-            
+                console.log('Temperatura: ', clima.temp);
+                console.log('Min: ', clima.min);
+                console.log('Max: ', clima.max);
+                console.log('Como está el clima: ', clima.desc)
+
                 await pause();
                 break;
             case 2:

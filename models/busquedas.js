@@ -36,24 +36,34 @@ class Busquedas{
         }
     }
 
+    get paramsOpenweathermap(){
+        return{
+            'appid': process.env.OPENWEATHER_KEY,
+            'units': 'metric',
+            'lang': 'es',
+        }
+    }
+
     async climaLugar( lat, lon){
         try{
             // instance axios.create()
-
-            // resp.data
-
-            return{
-                desc: '',
-                min: '',
-                max: '',
-                temp: '',
-            }
+            const instance = axios.create({
+                baseURL: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`,
+                params: this.paramsOpenweathermap,
+            })
+            const resp = await instance.get();
+            //console.log(resp.data)
+            //console.log(resp.data.weather[0].description)
+            return {
+                desc: resp.data.weather[0].description,
+                min: resp.data.main.temp_min,
+                max: resp.data.main.temp_max,
+                temp:resp.data.main.temp,
+            };
         }catch(error){
             console.log(error);
         }
-
     }
-    
 }
 
 module.exports = Busquedas;
