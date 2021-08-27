@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-
+require('colors');
 class Busquedas{
     historial = ['Tegucigalpa', 'Madril', 'San Jose'];
     constructor(){
@@ -52,8 +52,6 @@ class Busquedas{
                 params: this.paramsOpenweathermap,
             })
             const resp = await instance.get();
-            //console.log(resp.data)
-            //console.log(resp.data.weather[0].description)
             return {
                 desc: resp.data.weather[0].description,
                 min: resp.data.main.temp_min,

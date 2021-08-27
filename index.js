@@ -19,31 +19,26 @@ const main = async () => {
         opt = await inquirerMenu();
         switch ( opt ) {
             case 1:
-                
                 // Mostrar mensaje
                 const termino =  await leerInput('Ciudad: ');
-
                 // Buscar los lugares
                 const lugares = await busquedas.ciudad( termino );
-
                 // Seleccionar el lugar
                 console.log('Seleccione lugar para conocer la temperatura actual...')
                 const id = await listarLugares(lugares);
                 const lugarSelec= lugares.find(l => l.id === id );
                 // Mostrar los datos del clima
                 const clima = await busquedas.climaLugar(lugarSelec.lat, lugarSelec.lng);
-                //console.log(clima);
                 // Mostrar resultados
-
-                console.log('Informacion de la ciudad\n'.green);
-                console.log('Ciudad: ', lugarSelec.nombre);
+                console.clear();
+                console.log('Informacion de la ciudad y su clima\n'.green);
+                console.log('Ciudad: ', lugarSelec.nombre.green);
                 console.log('Latitud: ', lugarSelec.lat);
                 console.log('Longitud: ', lugarSelec.lng);
-                console.log('Temperatura: ', clima.temp);
-                console.log('Min: ', clima.min);
-                console.log('Max: ', clima.max);
-                console.log('Como está el clima: ', clima.desc)
-
+                console.log('Temperatura: ', clima.temp,'°C');
+                console.log('Min: ', clima.min,'°C');
+                console.log('Max: ', clima.max,'°C');
+                console.log('Como está el clima: ', clima.desc.green)
                 await pause();
                 break;
             case 2:
