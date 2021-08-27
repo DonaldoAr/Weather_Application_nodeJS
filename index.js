@@ -8,8 +8,6 @@ const { leerInput,
 const Busquedas = require('./models/busquedas');
 require('colors');
 
-//console.log(process.env.MAPBOX_KEY);
-
 const main = async () => {
     
     const busquedas = new Busquedas();
@@ -26,7 +24,10 @@ const main = async () => {
                 // Seleccionar el lugar
                 console.log('Seleccione lugar para conocer la temperatura actual...')
                 const id = await listarLugares(lugares);
+                if( id === '0') continue;
                 const lugarSelec= lugares.find(l => l.id === id );
+                // Guardar en DB
+                busquedas.agregarHistorial( lugarSelec.nombre );
                 // Mostrar los datos del clima
                 const clima = await busquedas.climaLugar(lugarSelec.lat, lugarSelec.lng);
                 // Mostrar resultados
@@ -38,21 +39,20 @@ const main = async () => {
                 console.log('Temperatura: ', clima.temp,'°C');
                 console.log('Min: ', clima.min,'°C');
                 console.log('Max: ', clima.max,'°C');
-                console.log('Como está el clima: ', clima.desc.green)
-                await pause();
+                console.log('Como está el clima: ', clima.desc.green);
                 break;
             case 2:
-                console.log('Hola2');
-                await pause();
+                busquedas.historial.forEach( (lugar, i) =>{
+                    const idx = `${ i +  1}.`.green;
+                    console.log( `${ idx } ${ lugar }`);
+                })
+                
                 break;
             case 0:
-        
-                break;
-                
+                break; 
         }
+        if( opt !== 0) await pause();        
     } while (opt !== 0);
-
-    //await pause();
 }
     
 
