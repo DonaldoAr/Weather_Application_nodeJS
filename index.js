@@ -46,7 +46,12 @@ const main = async () => {
                     const idx = `${ i +  1}.`.green;
                     console.log( `${ idx } ${ lugar }`);
                 })
-                
+                console.log('=====');
+                // busquedas.leerDB();
+                busquedas.historialCapitalizado().forEach( (lugar, i) =>{
+                    const idx = `${ i +  1}.`.green;
+                    console.log( `${ idx } ${ lugar }`);
+                });
                 break;
             case 0:
                 break; 

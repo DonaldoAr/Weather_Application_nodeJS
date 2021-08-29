@@ -7,6 +7,21 @@ class Busquedas{
 
     constructor(){
         // TODO: Leer db si existe
+        this.leerDB();
+    }
+
+    get historialCapitalizado(){
+        // Capitalizar cada palabra
+        const data = this.leerDB();
+        if( data ){
+            return null;
+        }
+        const ad = data.forEach(lugar => {
+            lugar.toUpperCase(); 
+        });
+        //return this.historial;
+        console.log(data);
+        return data;
     }
 
     get paramsMapbox(){
@@ -24,7 +39,6 @@ class Busquedas{
                 baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${ lugar }.json`,
                 params: this.paramsMapbox
             })
-
             const resp = await instance.get();
             //const resp = await axios.get('https://api.mapbox.com/geocoding/v5/mapbox.places/Que.json?access_token=pk.eyJ1IjoiZG9uYWxkbzciLCJhIjoiY2tzbDJ0cmxyMGZyeTJ2dGVpcWlxMGFnaCJ9.4LjFZLEiaUhrOeJJ8gbrDQ&limit=5&language=es');
             //console.log(resp.data.features);
@@ -70,7 +84,6 @@ class Busquedas{
         if( this.historial.includes( lugar.toLocaleLowerCase() )){
             return;
         }
-        
         // TODO: Prevenir duplicidad
         this.historial.unshift( lugar.toLocaleLowerCase() );
         // Grabar en DB
@@ -85,7 +98,16 @@ class Busquedas{
     }
 
     leerDB(){
-
+        // Debe de existir...
+        if( !fs.existsSync( this.dbPath ) ) return null;
+        
+        // Cargar la información 
+        // const info = readFileSync
+        const info = fs.readFileSync(this.dbPath, { encoding: 'utf-8'});
+        const data = JSON.parse( info );
+        return data;
+        //const a = this.historialCapitalizado()
+        //console.log(a)
     }
 }
 
