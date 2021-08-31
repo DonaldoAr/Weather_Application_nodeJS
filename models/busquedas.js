@@ -12,16 +12,11 @@ class Busquedas{
 
     get historialCapitalizado(){
         // Capitalizar cada palabra
-        const data = this.leerDB();
-        if( data ){
-            return null;
-        }
-        const ad = data.forEach(lugar => {
-            lugar.toUpperCase(); 
-        });
-        //return this.historial;
-        console.log(data);
-        return data;
+        return this.historial.map( lugar =>{
+            let palabras = lugar.split(' ');
+            palabras = palabras.map( p => p[0].toUpperCase() + p.substring(1));
+            return palabras.join(' ');
+        })
     }
 
     get paramsMapbox(){
@@ -84,7 +79,8 @@ class Busquedas{
         if( this.historial.includes( lugar.toLocaleLowerCase() )){
             return;
         }
-        // TODO: Prevenir duplicidad
+        // Only six elements in the history
+        this.historial = this.historial.splice(0, 5);
         this.historial.unshift( lugar.toLocaleLowerCase() );
         // Grabar en DB
         this.guardarDB();
@@ -98,16 +94,10 @@ class Busquedas{
     }
 
     leerDB(){
-        // Debe de existir...
         if( !fs.existsSync( this.dbPath ) ) return null;
-        
-        // Cargar la información 
-        // const info = readFileSync
         const info = fs.readFileSync(this.dbPath, { encoding: 'utf-8'});
         const data = JSON.parse( info );
-        return data;
-        //const a = this.historialCapitalizado()
-        //console.log(a)
+        this.historial = data.historial;
     }
 }
 
